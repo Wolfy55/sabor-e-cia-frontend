@@ -1,49 +1,59 @@
-.overlay{
+
+.overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(2px);
+    z-index: 100;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--space-4);
-    z-index: 100;
+    padding: 1rem;
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    overflow-y: auto;
+    background: rgb(0 0 0 / 60%);
+    backdrop-filter: blur(2px);
 }
 
-.dialog{
+.dialog {
     width: 100%;
-    max-width: 420px;
+    max-width: 440px;
+    max-height: calc(100vh - 2rem);
+    max-height: calc(100dvh - 2rem);
+    min-width: 0;
+    overflow-y: auto;
     background: var(--surface-raised);
     border: 1px solid var(--outline);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
-    padding: var(--space-6);
+    padding: 1.25rem;
     display: flex;
     flex-direction: column;
-    gap: var(--space-4);
+    gap: 1rem;
 }
 
-.header{
+.header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-4);
+    gap: 1rem;
 }
 
-.title{
+.title {
+    min-width: 0;
     font-family: var(--font-display);
     font-weight: var(--weight-bold);
     font-size: var(--text-md);
+    overflow-wrap: anywhere;
     margin: 0;
 }
 
-.closeButton{
+.closeButton {
+    flex: 0 0 auto;
     appearance: none;
     background: var(--surface);
     border: 1px solid var(--outline);
     color: var(--on-surface);
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border-radius: var(--radius-pill);
     cursor: pointer;
     display: inline-flex;
@@ -51,6 +61,28 @@
     justify-content: center;
 }
 
-.closeButton:hover{
+.closeButton:hover {
     background-color: var(--outline);
+}
+
+.closeButton:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+    .overlay {
+        align-items: flex-end;
+        padding: 0;
+    }
+
+    .dialog {
+        width: 100%;
+        max-width: none;
+        max-height: 90vh;
+        max-height: 90dvh;
+        padding: 1rem;
+        border-radius: 1rem 1rem 0 0;
+        padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    }
 }

@@ -1,19 +1,40 @@
-.barra{
+
+.barra {
     position: fixed;
-    left: 0;
-    right: 0;
+    inset-inline: 0;
     bottom: 0;
     z-index: 10;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-3);
-    padding: var(--space-3) var(--space-5);
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0.875rem max(1rem, env(safe-area-inset-left));
+    padding-bottom: max(0.875rem, env(safe-area-inset-bottom));
     background: var(--surface);
     border-top: 1px solid var(--border-subtle);
+    box-shadow: 0 -4px 16px rgb(0 0 0 / 12%);
 }
 
-.resumo{
+.resumo {
+    min-width: 0;
+    flex: 1 1 auto;
     font-weight: var(--weight-medium);
     color: var(--text-heading);
+    overflow-wrap: anywhere;
+}
+
+.barra button {
+    flex: 0 0 auto;
+}
+
+@media (max-width: 360px) {
+    .barra {
+        gap: 0.5rem;
+        padding-inline: 0.75rem;
+    }
+
+    .resumo {
+        font-size: 0.875rem;
+    }
 }
