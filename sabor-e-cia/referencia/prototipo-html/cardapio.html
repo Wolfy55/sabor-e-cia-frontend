@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cardápio | Sabor e cia café</title>
+  <meta name="description" content="Cardápio da Sabor e cia café: cafés, pães, bolos, tortas e salgados. Escolha e faça seu pedido.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- TODO: se a fonte do seu hero for outra, troque este link e a variável --fonte no CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --marrom-topo: #5C2F13;   /* barra de cima, cor amostrada do seu hero */
+      --marrom: #724325;        /* fundo da página */
+      --marrom-card: #5C2F13;
+      --creme: #F8DDB9;         /* botões e textos de destaque */
+      --creme-suave: #E9CBA3;   /* textos de apoio */
+      --fonte: "Outfit", system-ui, sans-serif;
+      --raio: 22px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; font-family: var(--fonte); background: var(--marrom); color: var(--creme); line-height: 1.55; padding-bottom: 96px; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid var(--creme); outline-offset: 3px; }
+
+    /* Topo (igual ao hero) */
+    .topo {
+      background: var(--marrom-topo);
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 12px 20px;
+    }
+    .topo__logo img { border-radius: 4px; }
+    .topo__acoes { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .btn {
+      font: inherit; font-weight: 500; cursor: pointer;
+      display: inline-block; padding: 10px 20px; border-radius: 10px;
+      text-decoration: none; border: 1px solid var(--creme);
+      background: var(--creme); color: var(--marrom-topo);
+      transition: background-color .2s, color .2s;
+    }
+    .btn:hover { background: #fff0dc; }
+    .btn--vazado { background: transparent; color: var(--creme); }
+    .btn--vazado:hover { background: rgba(248, 221, 185, .12); }
+
+    /* Cabeçalho da página */
+    .intro { max-width: 1100px; margin: 0 auto; padding: 36px 20px 8px; }
+    .intro h1 { font-size: clamp(2rem, 6vw, 3rem); font-weight: 600; line-height: 1.15; margin: 0 0 8px; }
+    .intro p { margin: 0; color: var(--creme-suave); font-size: 1.0625rem; }
+
+    /* Categorias */
+    .abas {
+      position: sticky; top: 0; z-index: 5;
+      background: var(--marrom);
+      padding: 14px 20px;
+    }
+    .abas__lista {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px;
+      list-style: none; margin-block: 0; padding-inline: 0;
+    }
+    .aba {
+      font: inherit; font-weight: 500; cursor: pointer; white-space: nowrap;
+      padding: 9px 20px; border-radius: 999px;
+      background: transparent; color: var(--creme); border: 1px solid var(--creme);
+      transition: background-color .2s, color .2s;
+    }
+    .aba:hover { background: rgba(248, 221, 185, .12); }
+    .aba[aria-pressed="true"] { background: var(--creme); color: var(--marrom-topo); }
+
+    /* Produtos */
+    .produtos {
+      max-width: 1100px; margin: 0 auto; padding: 16px 20px 32px;
+      display: grid; gap: 20px; grid-template-columns: 1fr;
+    }
+    .card {
+      background: var(--marrom-card);
+      border-radius: var(--raio);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .card[hidden] { display: none; }
+
+    .card__foto {
+      aspect-ratio: 4 / 3; width: 100%; object-fit: cover;
+      background: #7d4e30; display: flex; align-items: center; justify-content: center;
+      color: var(--creme-suave); font-size: .875rem;
+    }
+    .card__corpo { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+    .card__nome { font-size: 1.25rem; font-weight: 600; margin: 0; }
+    .card__desc { margin: 0; color: var(--creme-suave); font-size: .9375rem; flex: 1; }
+    .card__rodape { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; }
+    .card__preco { font-size: 1.125rem; font-weight: 600; }
+
+    /* Barra do pedido */
+    .pedido {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
+      background: var(--marrom-topo);
+      border-top: 1px solid rgba(248, 221, 185, .3);
+      padding: 14px 20px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .pedido[hidden] { display: none; }
+    .pedido__resumo { font-weight: 500; }
+
+    @media (min-width: 640px)  { .produtos { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 960px)  { .produtos { grid-template-columns: repeat(3, 1fr); gap: 24px; } .topo { padding: 12px 40px; } }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  </style>
+</head>
+<body>
+
+  <header class="topo">
+    <a class="topo__logo" href="index.html">
+      <img src="assets/logo.jpg" alt="Sabor e cia, cafeteria e panificação" width="56" height="56">
+    </a>
+    <div class="topo__acoes">
+      <a class="btn" href="#pedido">Fazer Pedido</a>
+      <a class="btn btn--vazado" href="index.html">Sobre nós</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h1>Nosso cardápio</h1>
+      <p>Escolha seus itens e a gente prepara para você.</p>
+    </section>
+
+    <nav class="abas" aria-label="Categorias do cardápio">
+      <ul class="abas__lista">
+        <li><button class="aba" type="button" data-categoria="todos" aria-pressed="true">Todos</button></li>
+        <li><button class="aba" type="button" data-categoria="cafes" aria-pressed="false">Cafés</button></li>
+        <li><button class="aba" type="button" data-categoria="paes" aria-pressed="false">Pães</button></li>
+        <li><button class="aba" type="button" data-categoria="bolos" aria-pressed="false">Bolos</button></li>
+        <li><button class="aba" type="button" data-categoria="tortas" aria-pressed="false">Tortas e sobremesas</button></li>
+        <li><button class="aba" type="button" data-categoria="salgados" aria-pressed="false">Salgados</button></li>
+      </ul>
+    </nav>
+
+    <!-- TODO: trocar nomes, descrições, preços e fotos pelos itens reais do cliente.
+         Para cada item novo, copie um <article class="card"> inteiro e mude data-id, data-categoria e data-preco. -->
+    <section class="produtos" id="cardapio" aria-label="Produtos">
+
+      <article class="card" data-id="cafe-expresso" data-categoria="cafes" data-preco="0.00">
+        <div class="card__foto">Foto do produto</div>
+        <div class="card__corpo">
+          <h2 class="card__nome">Café expresso</h2>
+          <p class="card__desc">Descrição curta do item.</p>
+          <div class="card__rodape">
+            <span class="card__preco">R$ 0,00</span>
+            <button class="btn" type="button" data-adicionar>Adicionar</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-id="pao-frances" data-categoria="paes" data-preco="0.00">
+        <div class="card__foto">Foto do produto</div>
+        <div class="card__corpo">
+          <h2 class="card__nome">Pão fresquinho</h2>
+          <p class="card__desc">Descrição curta do item.</p>
+          <div class="card__rodape">
+            <span class="card__preco">R$ 0,00</span>
+            <button class="btn" type="button" data-adicionar>Adicionar</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-id="bolo-pistache" data-categoria="bolos" data-preco="0.00">
+        <!-- TODO: usar a foto do bolo: <img class="card__foto" src="assets/bolo.jpg" alt="Bolo de ..."> -->
+        <div class="card__foto">Foto do produto</div>
+        <div class="card__corpo">
+          <h2 class="card__nome">Bolo da casa</h2>
+          <p class="card__desc">Descrição curta do item.</p>
+          <div class="card__rodape">
+            <span class="card__preco">R$ 0,00</span>
+            <button class="btn" type="button" data-adicionar>Adicionar</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-id="torta-do-dia" data-categoria="tortas" data-preco="0.00">
+        <div class="card__foto">Foto do produto</div>
+        <div class="card__corpo">
+          <h2 class="card__nome">Torta do dia</h2>
+          <p class="card__desc">Descrição curta do item.</p>
+          <div class="card__rodape">
+            <span class="card__preco">R$ 0,00</span>
+            <button class="btn" type="button" data-adicionar>Adicionar</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-id="salgado-assado" data-categoria="salgados" data-preco="0.00">
+        <div class="card__foto">Foto do produto</div>
+        <div class="card__corpo">
+          <h2 class="card__nome">Salgado assado</h2>
+          <p class="card__desc">Descrição curta do item.</p>
+          <div class="card__rodape">
+            <span class="card__preco">R$ 0,00</span>
+            <button class="btn" type="button" data-adicionar>Adicionar</button>
+          </div>
+        </div>
+      </article>
+
+    </section>
+  </main>
+
+  <!-- Barra do pedido: aparece quando houver itens -->
+  <aside class="pedido" id="pedido" aria-live="polite" hidden>
+    <span class="pedido__resumo"><span id="pedido-qtd">0</span> itens · <span id="pedido-total">R$ 0,00</span></span>
+    <button class="btn" type="button" id="pedido-finalizar">Ver pedido</button>
+  </aside>
+
+  <script>
+    // Filtro por categoria
+    // TODO: selecionar todos os botões .aba e todos os .card
+    // TODO: ao clicar numa aba, mostrar só os cards com o mesmo data-categoria ("todos" mostra tudo)
+    //       dica: os cards escondem com o atributo hidden (o CSS já trata)
+    // TODO: atualizar aria-pressed: "true" só na aba escolhida
+    // TODO: ao carregar, ler ?categoria=... da URL e já filtrar (para links vindos do hero)
+
+    // Carrinho
+    // TODO: criar um array/objeto para guardar os itens (id, nome, preço, quantidade)
+    // TODO: ao clicar em [data-adicionar], achar o card pai e ler data-id, data-preco e o nome
+    // TODO: somar a quantidade se o item já estiver no carrinho
+    // TODO: atualizar #pedido-qtd e #pedido-total (formatar em reais com toLocaleString)
+    // TODO: mostrar a barra #pedido (remover o atributo hidden) quando houver itens
+
+    // Envio do pedido
+    // TODO: (depois de definir a integração com a Softcom) enviar o carrinho ao backend
+  </script>
+</body>
+</html>

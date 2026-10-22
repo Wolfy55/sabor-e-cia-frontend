@@ -1,0 +1,40 @@
+:root{
+/* ---- Neutros: cores básicas da interface: fundo, superfície e texto ------------------------------ */
+--background: #724325;        /* Fundo geral da página */
+--surface: #5C2F13;           /* Fundo de elementos como navbar, campos e cabeçalho do modal */
+--surface-raised: #7D4E30;    /* Fundo de elementos que precisam se destacar (corpo do modal) */
+--on-surface: #F8DDB9;        /* Cor principal usada sobre os fundos (creme) */
+--on-surface-muted: #F9F5EF;  /* Cor para textos menos importantes (descrições dos cards) */
+--outline: #F8DDB9;           /* Cor usada em contornos de botão e fundo de hover */
+/* ---- Cores da marca: identidade visual do projeto ------------------------------ */
+--primary: #F8DDB9;           /* Cor principal da identidade visual (botão creme) */
+--primary-pressed: #E9CBA3;   /* Versão ao clicar ou passar o mouse em um elemento */
+--on-primary: #5C2F13;        /* Cor do conteúdo colocado sobre a cor principal */
+--secondary: #CAAA87;         /* Cor complementar à cor principal */
+--secondary-pressed: #B38A62; /* Cor complementar para hover */
+--on-secondary: #5C2F13;      /* Cor do conteúdo sobre a cor secundária */
+--accent: #F5C48A;            /* Cor usada para chamar atenção em detalhes */
+--on-accent: #5C2F13;         /* Cor do texto ou ícone sobre o destaque */
+--success: #BFE0BC;           /* Indica ações ou informações bem-sucedidas */
+--on-success: #5C2F13;        /* Cor do conteúdo sobre o sucesso */
+--warning: #FFD08A;           /* Indica avisos ou situações que exigem atenção */
+--on-warning: #5C2F13;        /* Cor do conteúdo sobre o aviso */
+--danger: #FFC9BF;            /* Indica erros, problemas ou ações perigosas */
+--on-danger: #5C2F13;         /* Cor do conteúdo sobre o perigo */
+/* ---- Tokens semânticos: nomes que indicam onde cada cor deve ser usada ------------------------------ */
+--text-heading: var(--on-surface); /* Cor dos títulos e cabeçalhos */
+--text-body: var(--on-surface);    /* Cor do texto normal da página */
+--text-muted: var(--on-surface-muted); /* Cor para informações secundárias */
+--text-inverse: var(--surface);    /* Cor para textos sobre fundos claros (creme) */
+--text-link: var(--primary-pressed); /* Cor normal dos links */
+--text-link-hover: var(--primary);   /* Cor dos links quando o mouse passa por cima */
+--surface-page: var(--background); /* Define o fundo principal da página */
+--surface-card: #7D4E30;           /* Define o fundo dos cards (mais claro que a página, como no protótipo) */
+--surface-sunken: var(--surface);  /* Fundo para áreas recuadas (caixa de resumo do pedido) */
+--border-subtle: rgba(248, 221, 185, 0.30);  /* Bordas mais discretas */
+--border-default: rgba(248, 221, 185, 0.50); /* Bordas padrão dos elementos */
+--accent-primary: var(--primary);  /* Define o destaque principal */
+--accent-primary-hover: var(--primary-pressed); /* Destaque quando o mouse passa por cima */
+--accent-secondary: var(--secondary); /* Define um destaque secundário */
+--focus-ring: var(--primary);      /* Cor do contorno ao selecionar um elemento */
+}

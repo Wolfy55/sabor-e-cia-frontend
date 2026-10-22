@@ -1,0 +1,19 @@
+.barra{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-5);
+    background: var(--surface);
+    border-top: 1px solid var(--border-subtle);
+}
+
+.resumo{
+    font-weight: var(--weight-medium);
+    color: var(--text-heading);
+}

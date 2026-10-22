@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sabor e cia café | Cafeteria e panificação em Pouso Alegre</title>
+  <meta name="description" content="Pães, bolos, tortas, salgados e cafés num espaço aconchegante para toda a família, em Pouso Alegre.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --marrom: #5E2C17;          /* TODO: conferir com o conta-gotas na logo */
+      --marrom-escuro: #3F1B0C;
+      --creme: #F3E9DC;
+      --creme-claro: #FBF6EE;
+      --cinza: #6B6560;
+      --cinza-claro: #D9D4CE;
+      --titulo: "Playfair Display", Georgia, serif;
+      --texto: "Lato", system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; font-family: var(--texto); color: var(--marrom); background: var(--creme); line-height: 1.6; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid var(--marrom); outline-offset: 3px; }
+
+    /* Navegação */
+    .nav {
+      background: var(--marrom);
+      color: var(--creme);
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      padding: 10px 20px;
+    }
+    .nav__logo img { border-radius: 4px; }
+    .nav__toggle {
+      font: inherit; color: var(--creme); background: none;
+      border: 1px solid rgba(243, 233, 220, .5); border-radius: 6px;
+      padding: 8px 14px; cursor: pointer;
+    }
+    .nav__links { display: none; width: 100%; list-style: none; margin: 0; padding: 12px 0 4px; } /* TODO (JS): alternar .nav--open no <nav> */
+    .nav--open .nav__links { display: block; }
+    .nav__links a { display: block; padding: 10px 0; text-decoration: none; }
+    .nav__links a:hover { text-decoration: underline; text-underline-offset: 6px; }
+    .nav :focus-visible { outline-color: var(--creme); }
+
+    /* Hero */
+    .hero {
+      display: grid; gap: 40px;
+      max-width: 1200px; margin: 0 auto;
+      padding: 48px 20px 56px;
+      align-items: center;
+    }
+    .hero__title {
+      font-family: var(--titulo); font-weight: 500;
+      font-size: clamp(2.5rem, 8vw, 4.75rem); line-height: 1.08;
+      margin: 0 0 18px;
+    }
+    .hero__lead { color: var(--cinza); font-size: 1.125rem; max-width: 30rem; margin: 0 0 30px; }
+    .hero__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+    .btn {
+      display: inline-block; padding: 14px 28px; border-radius: 6px;
+      font-weight: 700; text-decoration: none;
+      transition: background-color .2s, color .2s;
+    }
+    .btn--primary { background: var(--marrom); color: var(--creme); }
+    .btn--primary:hover { background: var(--marrom-escuro); }
+    .btn--ghost { border: 1.5px solid var(--marrom); }
+    .btn--ghost:hover { background: var(--marrom); color: var(--creme); }
+
+    /* Cartão do cardápio */
+    .menu {
+      background: var(--creme-claro);
+      border: 1px solid var(--marrom);
+      outline: 1px solid var(--marrom);
+      outline-offset: -8px;
+      padding: 36px 30px 30px;
+      max-width: 520px; width: 100%; justify-self: center;
+    }
+    .menu__title {
+      font-family: var(--titulo); font-weight: 600; font-size: 1.75rem;
+      text-align: center; margin: 0;
+    }
+    .menu__sub { text-align: center; color: var(--cinza); font-size: .9375rem; margin: 2px 0 22px; }
+    .menu__list { list-style: none; margin: 0; padding: 0; }
+    .menu__row {
+      display: block; text-decoration: none;
+      padding: 14px 0; border-top: 1px dotted var(--cinza);
+    }
+    .menu__row:hover .menu__name { text-decoration: underline; text-underline-offset: 5px; }
+    .menu__name { font-family: var(--titulo); font-weight: 600; font-size: 1.25rem; }
+    .menu__desc { display: block; color: var(--cinza); font-size: .9375rem; }
+    .menu__foot { text-align: center; margin: 18px 0 0; font-size: .9375rem; color: var(--cinza); }
+
+    /* Faixa inferior */
+    .band { background: var(--cinza-claro); padding: 14px 20px; text-align: center; font-size: .9375rem; }
+
+    @media (min-width: 800px) {
+      .nav { flex-wrap: nowrap; padding: 10px 40px; }
+      .nav__toggle { display: none; }
+      .nav__links { display: flex; width: auto; gap: 28px; padding: 0; }
+      .nav__links a { padding: 0; }
+      .hero { grid-template-columns: 1.05fr .95fr; gap: 64px; padding: 80px 40px 88px; }
+      .menu__row { display: flex; align-items: baseline; gap: 12px; }
+      .menu__desc { display: inline; margin-left: auto; text-align: right; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" aria-label="Principal">
+    <a class="nav__logo" href="#inicio">
+      <img src="assets/logo.jpg" alt="Sabor e cia, cafeteria e panificação" width="56" height="56">
+    </a>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
+    <ul class="nav__links" id="nav-links">
+      <li><a href="#cardapio">Cardápio</a></li>
+      <li><a href="#espaco">O espaço</a></li>
+      <li><a href="#contato">Onde estamos</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero" id="inicio">
+    <div>
+      <h1 class="hero__title">O sabor de casa, feito todo dia.</h1>
+      <p class="hero__lead">Pães quentinhos, bolos, tortas e o café que você gosta, num espaço aconchegante para toda a família.</p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="#cardapio">Ver cardápio</a>
+        <a class="btn btn--ghost" href="#pedido">Fazer pedido</a>
+      </div>
+    </div>
+
+    <section class="menu" aria-labelledby="menu-titulo">
+      <h2 class="menu__title" id="menu-titulo">Nosso cardápio</h2>
+      <p class="menu__sub">Escolha uma categoria</p>
+      <ul class="menu__list">
+        <!-- TODO: trocar as descrições pelos itens reais que o cliente vende -->
+        <li><a class="menu__row" href="#cardapio" data-categoria="cafes"><span class="menu__name">Cafés</span><span class="menu__desc">Expresso, coado e cappuccino</span></a></li>
+        <li><a class="menu__row" href="#cardapio" data-categoria="paes"><span class="menu__name">Pães</span><span class="menu__desc">Assados durante o dia</span></a></li>
+        <li><a class="menu__row" href="#cardapio" data-categoria="bolos"><span class="menu__name">Bolos</span><span class="menu__desc">Inteiros ou em fatia</span></a></li>
+        <li><a class="menu__row" href="#cardapio" data-categoria="tortas"><span class="menu__name">Tortas e sobremesas</span><span class="menu__desc">Doces e salgadas</span></a></li>
+        <li><a class="menu__row" href="#cardapio" data-categoria="salgados"><span class="menu__name">Salgados</span><span class="menu__desc">Fritos e assados</span></a></li>
+      </ul>
+      <p class="menu__foot">Peça pelo celular e a gente prepara.</p>
+    </section>
+  </header>
+
+  <div class="band">Cafeteria e panificação em Pouso Alegre, Sul de Minas</div>
+
+  <!-- TODO: próximas seções: #cardapio, #pedido, #espaco, #contato -->
+
+  <script>
+    // Menu do celular
+    // TODO: selecionar .nav e .nav__toggle
+    // TODO: ao clicar no botão, alternar a classe "nav--open" no <nav>
+    // TODO: atualizar aria-expanded do botão ("true" aberto, "false" fechado)
+    // TODO: fechar o menu ao clicar em um link
+
+    // Categorias do cartão do cardápio
+    // TODO: selecionar todos os links com data-categoria
+    // TODO: ao clicar, guardar a categoria escolhida para o cardápio filtrar depois
+  </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+:root{
+    --radius-clay-sm: 16px;
+    --radius-clay-md: 24px;
+    --radius-clay-lg: 32px;
+    --radius-clay-full: 999px;
+    --radius-sm: var(--radius-clay-sm);
+    --radius-md: var(--radius-clay-md);
+    --radius-lg: var(--radius-clay-lg);
+    --radius-pill: var(--radius-clay-full);
+    /*Sombras */
+    --shadow-clay-sm: -2px -2px 6px rgba(248, 221, 185, 0.06), 3px 3px 8px rgba(30, 12, 4, 0.35);
+    --shadow-clay-md: -4px -4px 10px rgba(248, 221, 185, 0.06), 6px 6px 14px rgba(30, 12, 4, 0.40);
+    --shadow-clay-lg: -6px -6px 16px rgba(248, 221, 185, 0.06), 10px 10px 24px rgba(30, 12, 4, 0.45);
+    --shadow-pressed: inset 2px 2px 6px rgba(30, 12, 4, 0.40);
+
+    --shadow-sm: var(--shadow-clay-sm);
+    --shadow-md: var(--shadow-clay-md);
+    --shadow-lg: var(--shadow-clay-lg);
+    /* Duração de animação */
+    --ease-standant: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --duration-fast: 150ms;
+    --duration-base: 200ms;
+    --duration-slow: 300ms;
+}
+*{box-sizing: border-box;}
+body {
+    background: var(--surface-page);
+    color: var(--text-body);
+    font-family: var(--font-body);
+    margin: 0;
+}
+a{
+    color: var(--text-link);
+    text-decoration: none;
+    font-weight: var(--weight-semibold);
+}
+a:hover{
+    color: var(--text-link-hover);
+}

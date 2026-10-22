@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sabor e cia café | Cafeteria e panificação em Pouso Alegre</title>
+  <meta name="description" content="Pães, bolos, tortas, salgados e cafés num espaço aconchegante para toda a família, em Pouso Alegre. Veja o cardápio e faça seu pedido.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- TODO: se a fonte do seu hero for outra, troque este link e a variável --fonte no CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --marrom-topo: #5C2F13;
+      --marrom: #724325;
+      --marrom-card: #5C2F13;
+      --creme: #F8DDB9;
+      --creme-suave: #E9CBA3;
+      --fonte: "Outfit", system-ui, sans-serif;
+      --raio: 22px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: var(--fonte); background: var(--marrom); color: var(--creme); line-height: 1.55; padding-bottom: 80px; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid var(--creme); outline-offset: 3px; }
+
+    /* Botões */
+    .btn {
+      font: inherit; font-weight: 500; cursor: pointer;
+      display: inline-block; padding: 10px 20px; border-radius: 10px;
+      text-decoration: none; border: 1px solid var(--creme);
+      background: var(--creme); color: var(--marrom-topo);
+      transition: background-color .2s, color .2s;
+    }
+    .btn:hover { background: #fff0dc; }
+    .btn--vazado { background: transparent; color: var(--creme); }
+    .btn--vazado:hover { background: rgba(248, 221, 185, .12); }
+    .btn--grande { padding: 14px 28px; font-size: 1.0625rem; }
+
+    /* Navbar */
+    .topo {
+      background: var(--marrom-topo);
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 12px 20px;
+    }
+    .topo__logo img { border-radius: 4px; }
+    .topo__frase { display: none; margin: 0; color: var(--creme-suave); font-size: .9375rem; }
+    .topo__acoes { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    /* Hero */
+    .hero {
+      max-width: 1200px; margin: 0 auto;
+      padding: 40px 20px 44px;
+      display: grid; gap: 40px; align-items: center;
+    }
+    .hero__selo {
+      display: inline-block; margin: 0 0 18px;
+      padding: 6px 16px; border: 1px solid rgba(248, 221, 185, .55); border-radius: 999px;
+      font-size: .9375rem; color: var(--creme-suave);
+    }
+    .hero__titulo { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 600; line-height: 1.08; margin: 0 0 18px; }
+    .hero__texto { font-size: 1.1875rem; max-width: 33rem; margin: 0 0 30px; color: var(--creme-suave); }
+    .hero__acoes { display: flex; flex-wrap: wrap; gap: 12px; }
+
+    /* Foto do hero */
+    .hero__foto {
+      position: relative; margin: 0; width: 100%; max-width: 460px; justify-self: center;
+    }
+    .hero__foto img,
+    .hero__foto-vazia {
+      width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 28px;
+    }
+    .hero__foto-vazia {
+      background: #7d4e30; color: var(--creme-suave);
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 24px; font-size: .9375rem;
+    }
+    .hero__etiqueta {
+      position: absolute; left: 16px; bottom: 16px;
+      background: var(--creme); color: var(--marrom-topo);
+      border-radius: 14px; padding: 10px 16px; line-height: 1.3;
+    }
+    .hero__etiqueta strong { display: block; font-weight: 600; }
+    .hero__etiqueta span { font-size: .875rem; }
+
+    /* Destaques */
+    .hero__destaques {
+      grid-column: 1 / -1; list-style: none; margin: 8px 0 0; padding: 0;
+      display: grid; gap: 20px; grid-template-columns: 1fr;
+    }
+    .hero__destaques li { border-top: 1px solid rgba(248, 221, 185, .3); padding-top: 14px; }
+    .hero__destaques strong { display: block; font-size: 1.125rem; font-weight: 600; }
+    .hero__destaques span { color: var(--creme-suave); font-size: .9375rem; }
+
+    /* Cardápio */
+    .intro { max-width: 1100px; margin: 0 auto; padding: 24px 20px 8px; scroll-margin-top: 8px; }
+    .intro h2 { font-size: clamp(1.875rem, 5vw, 2.75rem); font-weight: 600; line-height: 1.15; margin: 0 0 8px; }
+    .intro p { margin: 0; color: var(--creme-suave); font-size: 1.0625rem; }
+
+    .abas { position: sticky; top: 0; z-index: 5; background: var(--marrom); padding: 14px 20px; }
+    .abas__lista {
+      max-width: 1100px; margin: 0 auto; padding: 0 0 4px;
+      display: flex; gap: 10px; overflow-x: auto; list-style: none;
+    }
+    .aba {
+      font: inherit; font-weight: 500; cursor: pointer; white-space: nowrap;
+      padding: 9px 20px; border-radius: 999px;
+      background: transparent; color: var(--creme); border: 1px solid var(--creme);
+      transition: background-color .2s, color .2s;
+    }
+    .aba:hover { background: rgba(248, 221, 185, .12); }
+    .aba[aria-pressed="true"] { background: var(--creme); color: var(--marrom-topo); }
+
+    .produtos {
+      max-width: 1100px; margin: 0 auto; padding: 16px 20px 32px;
+      display: grid; gap: 20px; grid-template-columns: 1fr;
+    }
+    .card { background: var(--marrom-card); border-radius: var(--raio); overflow: hidden; display: flex; flex-direction: column; }
+    .card[hidden] { display: none; }
+    .card__foto {
+      aspect-ratio: 4 / 3; width: 100%; object-fit: cover;
+      background: #7d4e30; color: var(--creme-suave); font-size: .875rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .card__corpo { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+    .card__nome { font-size: 1.25rem; font-weight: 600; margin: 0; }
+    .card__desc { margin: 0; color: var(--creme-suave); font-size: .9375rem; flex: 1; }
+    .card__rodape { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; }
+    .card__preco { font-size: 1.125rem; font-weight: 600; }
+
+    /* Barra do pedido */
+    .pedido {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
+      background: var(--marrom-topo); border-top: 1px solid rgba(248, 221, 185, .3);
+      padding: 14px 20px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .pedido[hidden] { display: none; }
+    .pedido__resumo { font-weight: 500; }
+
+
+    /* Seção: nosso espaço (fotos e vídeos) */
+    .secao { max-width: 1100px; margin: 0 auto; padding: 56px 20px; }
+    .secao__titulo { font-size: clamp(1.875rem, 5vw, 2.75rem); font-weight: 600; line-height: 1.15; margin: 0 0 8px; }
+    .secao__texto { margin: 0 0 28px; color: var(--creme-suave); font-size: 1.0625rem; max-width: 38rem; }
+
+    .ambiente__grade { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .midia { margin: 0; position: relative; overflow: hidden; border-radius: 20px; background: #7d4e30; aspect-ratio: 1 / 1; }
+    .midia img, .midia video { width: 100%; height: 100%; object-fit: cover; }
+    .midia--video { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
+    .midia__vazia {
+      width: 100%; height: 100%; padding: 16px; text-align: center;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+      color: var(--creme-suave); font-size: .875rem;
+    }
+    .midia__play {
+      width: 56px; height: 56px; border-radius: 50%; background: var(--creme);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .midia__play::after {
+      content: ""; margin-left: 4px;
+      border-left: 16px solid var(--marrom-topo);
+      border-top: 10px solid transparent; border-bottom: 10px solid transparent;
+    }
+
+    /* Seção: contato */
+    .contato { background: var(--marrom-topo); }
+    .contato__grade { display: grid; gap: 32px; }
+    .contato__dados { margin: 0; display: grid; gap: 0; }
+    .contato__item { padding: 16px 0; border-top: 1px dotted rgba(248, 221, 185, .45); }
+    .contato__item:first-child { border-top: 0; padding-top: 0; }
+    .contato__item dt { color: var(--creme-suave); font-size: .9375rem; margin-bottom: 2px; }
+    .contato__item dd { margin: 0; font-size: 1.125rem; font-weight: 500; }
+    .contato__item a { text-decoration: underline; text-underline-offset: 4px; }
+    .contato__acoes { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+    .contato__mapa { border-radius: var(--raio); overflow: hidden; background: #7d4e30; min-height: 280px; }
+    .contato__mapa iframe { width: 100%; height: 100%; min-height: 280px; border: 0; display: block; }
+    .contato__mapa-vazio {
+      min-height: 280px; height: 100%; padding: 24px; text-align: center;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--creme-suave); font-size: .9375rem;
+    }
+
+    /* Rodapé */
+    .rodape { background: #4A2110; padding: 22px 20px; text-align: center; color: var(--creme-suave); font-size: .9375rem; }
+    .rodape p { margin: 0; }
+
+    @media (min-width: 800px) {
+      .secao { padding: 80px 40px; }
+      .ambiente__grade { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+      .midia--video { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
+      .contato__grade { grid-template-columns: 1fr 1fr; gap: 48px; align-items: stretch; }
+    }
+
+    /* Painéis: carrinho e pagamento */
+    .painel {
+      position: fixed; inset: 0; z-index: 30;
+      background: rgba(30, 12, 4, .65);
+      display: flex; align-items: flex-end; justify-content: center;
+    }
+    .painel[hidden] { display: none; }
+    .painel__caixa {
+      background: var(--marrom); width: 100%; max-height: 92vh;
+      border-radius: var(--raio) var(--raio) 0 0;
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+    .painel__topo {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 16px 20px; background: var(--marrom-topo);
+    }
+    .painel__topo h2 { margin: 0; font-size: 1.375rem; font-weight: 600; }
+    .painel__corpo { padding: 20px; overflow-y: auto; flex: 1; }
+    .painel__rodape { padding: 16px 20px; background: var(--marrom-topo); border-top: 1px solid rgba(248, 221, 185, .3); display: grid; gap: 12px; }
+    .btn--pequeno { padding: 7px 14px; font-size: .9375rem; }
+    .btn--largo { width: 100%; padding: 14px 20px; font-size: 1.0625rem; }
+    .sem-rolagem { overflow: hidden; }
+
+    /* Itens do carrinho */
+    .carrinho__lista { list-style: none; margin: 0; padding: 0; }
+    .carrinho__vazio { margin: 0; color: var(--creme-suave); text-align: center; padding: 24px 0; }
+    .carrinho__vazio[hidden] { display: none; }
+    .item {
+      display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; align-items: center;
+      padding: 14px 0; border-bottom: 1px dotted rgba(248, 221, 185, .45);
+    }
+    .item__nome { font-weight: 600; font-size: 1.0625rem; }
+    .item__preco { font-weight: 600; text-align: right; }
+    .item__qtd { display: flex; align-items: center; gap: 10px; }
+    .item__qtd button {
+      font: inherit; width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
+      background: transparent; color: var(--creme); border: 1px solid var(--creme);
+    }
+    .item__qtd button:hover { background: rgba(248, 221, 185, .15); }
+    .item__remover { font: inherit; font-size: .875rem; background: none; border: 0; color: var(--creme-suave); text-decoration: underline; cursor: pointer; justify-self: end; }
+    .totais { margin-top: 18px; display: grid; gap: 4px; }
+    .totais__linha { display: flex; justify-content: space-between; color: var(--creme-suave); }
+    .totais__linha--final { color: var(--creme); font-size: 1.25rem; font-weight: 600; margin-top: 6px; }
+
+    /* Formulário de pagamento */
+    .campo { display: grid; gap: 6px; margin-bottom: 18px; }
+    .campo[hidden] { display: none; }
+    .campo label, .grupo legend { font-weight: 500; }
+    .campo input, .campo textarea {
+      font: inherit; color: var(--creme); background: var(--marrom-topo);
+      border: 1px solid rgba(248, 221, 185, .5); border-radius: 10px; padding: 12px 14px; width: 100%;
+    }
+    .campo textarea { min-height: 84px; resize: vertical; }
+    .campo input::placeholder, .campo textarea::placeholder { color: rgba(233, 203, 163, .65); }
+    .grupo { border: 0; padding: 0; margin: 0 0 18px; display: grid; gap: 10px; }
+    .grupo legend { padding: 0; margin-bottom: 6px; }
+    .opcao {
+      display: flex; align-items: center; gap: 12px; cursor: pointer;
+      padding: 12px 14px; border: 1px solid rgba(248, 221, 185, .5); border-radius: 12px;
+    }
+    .opcao input { accent-color: var(--creme); width: 18px; height: 18px; margin: 0; }
+    .opcao:has(input:checked) { background: var(--creme); color: var(--marrom-topo); border-color: var(--creme); }
+    .opcao:has(input:focus-visible) { outline: 3px solid var(--creme); outline-offset: 3px; }
+    .resumo { background: var(--marrom-card); border-radius: 14px; padding: 14px 16px; margin-bottom: 8px; }
+    .resumo h3 { margin: 0 0 8px; font-size: 1rem; font-weight: 600; }
+    .resumo ul { list-style: none; margin: 0; padding: 0; color: var(--creme-suave); font-size: .9375rem; }
+    .resumo li { display: flex; justify-content: space-between; gap: 12px; }
+    .aviso { background: var(--creme); color: var(--marrom-topo); border-radius: 14px; padding: 16px; font-weight: 500; }
+    .aviso[hidden] { display: none; }
+
+    .btn:disabled { opacity: .5; cursor: not-allowed; }
+
+    @media (min-width: 640px) {
+      .painel { align-items: center; padding: 24px; }
+      .painel__caixa { max-width: 560px; border-radius: var(--raio); max-height: 88vh; }
+    }
+
+    @media (min-width: 640px) { .produtos { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 800px) {
+      .topo { padding: 12px 40px; }
+      .topo__frase { display: block; }
+      .hero { grid-template-columns: 1.05fr .95fr; gap: 56px; padding: 64px 40px 56px; }
+      .hero__foto { justify-self: end; }
+      .hero__destaques { grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 16px; }
+    }
+    @media (min-width: 960px) { .produtos { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="topo">
+    <a class="topo__logo" href="#inicio">
+      <img src="assets/logo.jpg" alt="Sabor e cia, cafeteria e panificação" width="56" height="56">
+    </a>
+    <!-- TODO: escolher a frase decorativa final com o cliente -->
+    <p class="topo__frase">Pão quentinho, café na hora</p>
+    <div class="topo__acoes">
+      <a class="btn" href="#cardapio">Fazer Pedido</a>
+      <a class="btn btn--vazado" href="#sobre">Sobre nós</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="inicio">
+    <div>
+      <p class="hero__selo">Cafeteria e panificação</p>
+      <h1 class="hero__titulo">O sabor de casa, feito todo dia.</h1>
+      <p class="hero__texto">Pães quentinhos, bolos, tortas e o café que você gosta, num espaço aconchegante para toda a família.</p>
+      <div class="hero__acoes">
+        <a class="btn btn--grande" href="#cardapio">Ver cardápio</a>
+        <a class="btn btn--grande btn--vazado" href="#sobre">Conhecer o espaço</a>
+      </div>
+    </div>
+
+    <figure class="hero__foto">
+      <!-- TODO: trocar o bloco abaixo por <img src="assets/hero.jpg" alt="Bolo de pistache na mesa da cafeteria"> -->
+      <div class="hero__foto-vazia">Foto do bolo ou do salão</div>
+      <figcaption class="hero__etiqueta">
+        <strong>Pouso Alegre</strong>
+        <span>Sul de Minas</span>
+      </figcaption>
+    </figure>
+
+    <ul class="hero__destaques">
+      <li><strong>Mais de 3 anos</strong><span>servindo Pouso Alegre</span></li>
+      <li><strong>Espaço familiar</strong><span>aconchegante para toda a família</span></li>
+      <li><strong>Peça pelo celular</strong><span>escolha no cardápio e a gente prepara</span></li>
+    </ul>
+  </section>
+
+  <!-- Cardápio -->
+  <main>
+    <div class="intro" id="cardapio">
+      <h2>Nosso cardápio</h2>
+      <p>Escolha seus itens e a gente prepara para você.</p>
+    </div>
+
+    <nav class="abas" aria-label="Categorias do cardápio">
+      <ul class="abas__lista">
+        <li><button class="aba" type="button" data-categoria="todos" aria-pressed="true">Todos</button></li>
+        <li><button class="aba" type="button" data-categoria="cafes" aria-pressed="false">Cafés</button></li>
+        <li><button class="aba" type="button" data-categoria="paes" aria-pressed="false">Pães</button></li>
+        <li><button class="aba" type="button" data-categoria="bolos" aria-pressed="false">Bolos</button></li>
+        <li><button class="aba" type="button" data-categoria="tortas" aria-pressed="false">Tortas e sobremesas</button></li>
+        <li><button class="aba" type="button" data-categoria="salgados" aria-pressed="false">Salgados</button></li>
+      </ul>
+    </nav>
+
+    <!-- TODO: trocar nomes, descrições, preços e fotos pelos itens reais.
+         Para cada item novo, copie um <article class="card"> inteiro e mude data-id, data-categoria e data-preco. -->
+    <section class="produtos" aria-label="Produtos">
+
+      <article class="card" data-id="cafe-expresso" data-categoria="cafes" data-preco="0.00">
+        <div class="card__foto">Foto do produto</div>
+        <div class="card__corpo">
+          <h3 class="card__nome">Café expresso</h3>
+          <p class="card__desc">Descrição curta do item.</p>
+          <div class="card__rodape">
+            <span class="card__preco">R$ 0,00</span>
+            <button class="btn" type="button" data-adicionar>Adicionar</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-id="pao-fresquinho" data-categoria="paes" data-preco="0.00">
+        <div class="card__foto">Foto do produto</div>
+        <div class="card__corpo">
+          <h3 class="card__nome">Pão fresquinho</h3>
+          <p class="card__desc">Descrição curta do item.</p>
+          <div class="card__rodape">
+            <span class="card__preco">R$ 0,00</span>
+            <button class="btn" type="button" data-adicionar>Adicionar</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-id="bolo-da-casa" data-categoria="bolos" data-preco="0.00">
+        <div class="card__foto">Foto do produto</div>
+        <div class="card__corpo">
+          <h3 class="card__nome">Bolo da casa</h3>
+          <p class="card__desc">Descrição curta do item.</p>
+          <div class="card__rodape">
+            <span class="card__preco">R$ 0,00</span>
+            <button class="btn" type="button" data-adicionar>Adicionar</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-id="torta-pistache" data-categoria="tortas" data-preco="0.00">
+        <div class="card__foto">Foto do produto</div>
+        <div class="card__corpo">
+          <h3 class="card__nome">Torta de pistache</h3>
+          <p class="card__desc">Torta cremosa de pistache, com massa crocante e recheio macio.</p>
+          <div class="card__rodape">
+            <span class="card__preco">R$ 0,00</span>
+            <button class="btn" type="button" data-adicionar>Adicionar</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-id="torta-limao" data-categoria="tortas" data-preco="0.00">
+        <div class="card__foto">Foto do produto</div>
+        <div class="card__corpo">
+          <h3 class="card__nome">Torta de limão</h3>
+          <p class="card__desc">Massa crocante e recheio cremoso, na medida certa entre doce e azedinho.</p>
+          <div class="card__rodape">
+            <span class="card__preco">R$ 0,00</span>
+            <button class="btn" type="button" data-adicionar>Adicionar</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-id="salgado-assado" data-categoria="salgados" data-preco="0.00">
+        <div class="card__foto">Foto do produto</div>
+        <div class="card__corpo">
+          <h3 class="card__nome">Salgado assado</h3>
+          <p class="card__desc">Descrição curta do item.</p>
+          <div class="card__rodape">
+            <span class="card__preco">R$ 0,00</span>
+            <button class="btn" type="button" data-adicionar>Adicionar</button>
+          </div>
+        </div>
+      </article>
+
+    </section>
+  </main>
+
+  <!-- Nosso espaço: fotos e vídeos -->
+  <section class="secao" id="sobre" aria-labelledby="espaco-titulo">
+    <h2 class="secao__titulo" id="espaco-titulo">Nosso espaço</h2>
+    <p class="secao__texto">Um lugar aconchegante para tomar um café, provar um doce e receber a família.</p>
+
+    <div class="ambiente__grade">
+      <!-- TODO: vídeo do ambiente. Salve em assets/ambiente.mp4 (e uma capa em assets/ambiente-capa.jpg) e troque o bloco .midia__vazia por:
+           <video controls preload="none" poster="assets/ambiente-capa.jpg"><source src="assets/ambiente.mp4" type="video/mp4"></video>
+           Dica: prefira vídeos curtos e leves (até uns 20 MB) para carregar bem no celular. -->
+      <figure class="midia midia--video">
+        <div class="midia__vazia">
+          <span class="midia__play" aria-hidden="true"></span>
+          <span>Vídeo do ambiente</span>
+        </div>
+      </figure>
+
+      <!-- TODO: trocar cada .midia__vazia por <img src="assets/ambiente-1.jpg" alt="descrição da foto" loading="lazy"> -->
+      <figure class="midia"><div class="midia__vazia">Foto do salão</div></figure>
+      <figure class="midia"><div class="midia__vazia">Foto da vitrine</div></figure>
+      <figure class="midia"><div class="midia__vazia">Foto das mesas</div></figure>
+      <figure class="midia"><div class="midia__vazia">Foto dos cafés</div></figure>
+    </div>
+  </section>
+
+  <!-- Contato -->
+  <section class="contato" id="contato" aria-labelledby="contato-titulo">
+    <div class="secao">
+      <h2 class="secao__titulo" id="contato-titulo">Venha nos visitar</h2>
+      <p class="secao__texto">Estamos em Pouso Alegre. Passe por aqui ou fale com a gente.</p>
+
+      <div class="contato__grade">
+        <div>
+          <!-- TODO: preencher com os dados reais do cliente -->
+          <dl class="contato__dados">
+            <div class="contato__item">
+              <dt>Endereço</dt>
+              <dd>Rua, número e bairro, Pouso Alegre, MG</dd>
+            </div>
+            <div class="contato__item">
+              <dt>Horário de funcionamento</dt>
+              <dd>Segunda a sexta, 00h às 00h<br>Sábado e domingo, 00h às 00h</dd>
+            </div>
+            <div class="contato__item">
+              <dt>Telefone e WhatsApp</dt>
+              <dd><a href="tel:+5535900000000">(35) 90000-0000</a></dd>
+            </div>
+            <div class="contato__item">
+              <dt>Redes sociais</dt>
+              <dd><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></dd>
+            </div>
+          </dl>
+
+          <div class="contato__acoes">
+            <!-- TODO: trocar 5535900000000 pelo WhatsApp real (código do país + DDD + número, só dígitos) -->
+            <a class="btn btn--grande" href="https://wa.me/5535900000000" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+            <!-- TODO: depois de ter o endereço exato, colocar nele a busca do Google Maps -->
+            <a class="btn btn--grande btn--vazado" href="https://www.google.com/maps/search/?api=1&query=Sabor+e+cia+caf%C3%A9+Pouso+Alegre" target="_blank" rel="noopener">Ver no mapa</a>
+          </div>
+        </div>
+
+        <div class="contato__mapa">
+          <!-- TODO: no Google Maps, busque o endereço, clique em Compartilhar > Incorporar um mapa e cole o <iframe> aqui no lugar do bloco abaixo -->
+          <div class="contato__mapa-vazio">Mapa da localização</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="rodape">
+    <p>Sabor e cia café &middot; Cafeteria e panificação em Pouso Alegre, MG</p>
+  </footer>
+
+  <!-- Painel 1: carrinho -->
+  <section class="painel" id="carrinho" role="dialog" aria-modal="true" aria-labelledby="carrinho-titulo" hidden>
+    <!-- TODO: para ver o design sem JavaScript, remova o atributo hidden deste painel por um instante -->
+    <div class="painel__caixa">
+      <div class="painel__topo">
+        <h2 id="carrinho-titulo">Seu pedido</h2>
+        <button class="btn btn--vazado btn--pequeno" type="button" data-fechar>Fechar</button>
+      </div>
+      <div class="painel__corpo">
+        <p class="carrinho__vazio" id="carrinho-vazio">Seu carrinho está vazio. Volte ao cardápio e escolha seus itens.</p>
+        <ul class="carrinho__lista" id="carrinho-lista">
+          <!-- TODO (JS): um <li class="item"> por produto, criado a partir do <template> abaixo -->
+        </ul>
+        <div class="totais">
+          <div class="totais__linha"><span>Itens</span><span id="carrinho-qtd">0</span></div>
+          <div class="totais__linha totais__linha--final"><span>Total</span><span id="carrinho-total">R$ 0,00</span></div>
+        </div>
+      </div>
+      <div class="painel__rodape">
+        <button class="btn btn--largo" type="button" id="ir-pagamento">Continuar para o pagamento</button>
+        <button class="btn btn--vazado btn--largo" type="button" data-fechar>Continuar escolhendo</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modelo de um item do carrinho (o JS copia este bloco) -->
+  <template id="tpl-item-carrinho">
+    <li class="item" data-id="">
+      <span class="item__nome">Nome do produto</span>
+      <span class="item__preco">R$ 0,00</span>
+      <div class="item__qtd">
+        <button type="button" data-menos aria-label="Diminuir quantidade">&minus;</button>
+        <span data-quantidade>1</span>
+        <button type="button" data-mais aria-label="Aumentar quantidade">+</button>
+      </div>
+      <button class="item__remover" type="button" data-remover>Remover</button>
+    </li>
+  </template>
+
+  <!-- Painel 2: pagamento -->
+  <section class="painel" id="pagamento" role="dialog" aria-modal="true" aria-labelledby="pagamento-titulo" hidden>
+    <div class="painel__caixa">
+      <div class="painel__topo">
+        <h2 id="pagamento-titulo">Finalizar pedido</h2>
+        <button class="btn btn--vazado btn--pequeno" type="button" data-fechar>Fechar</button>
+      </div>
+
+      <form class="painel__corpo" id="form-pagamento" novalidate>
+        <div class="resumo">
+          <h3>Resumo</h3>
+          <ul id="pagamento-resumo">
+            <!-- TODO (JS): uma linha por item, ex.: <li><span>2x Torta de limão</span><span>R$ 0,00</span></li> -->
+          </ul>
+          <div class="totais__linha totais__linha--final"><span>Total</span><span id="pagamento-total">R$ 0,00</span></div>
+        </div>
+
+        <div class="campo">
+          <label for="nome">Seu nome</label>
+          <input id="nome" name="nome" type="text" autocomplete="name" required>
+        </div>
+        <div class="campo">
+          <label for="telefone">WhatsApp</label>
+          <input id="telefone" name="telefone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(35) 90000-0000" required>
+        </div>
+
+        <fieldset class="grupo">
+          <legend>Como você quer receber?</legend>
+          <label class="opcao"><input type="radio" name="entrega" value="mesa" checked> Vou consumir na mesa</label>
+          <label class="opcao"><input type="radio" name="entrega" value="balcao"> Retirar no balcão</label>
+        </fieldset>
+        <div class="campo" id="campo-mesa">
+          <label for="mesa">Número da mesa</label>
+          <input id="mesa" name="mesa" type="text" inputmode="numeric">
+        </div>
+
+        <fieldset class="grupo">
+          <legend>Forma de pagamento</legend>
+          <!-- TODO: confirmar com o cliente quais formas ele aceita -->
+          <label class="opcao"><input type="radio" name="pagamento" value="pix" checked> Pix</label>
+          <label class="opcao"><input type="radio" name="pagamento" value="cartao"> Cartão (crédito ou débito)</label>
+          <label class="opcao"><input type="radio" name="pagamento" value="dinheiro"> Dinheiro</label>
+        </fieldset>
+        <div class="campo" id="campo-troco" hidden>
+          <label for="troco">Troco para quanto?</label>
+          <input id="troco" name="troco" type="text" inputmode="decimal" placeholder="Ex.: 50,00">
+        </div>
+
+        <div class="campo">
+          <label for="obs">Observações (opcional)</label>
+          <textarea id="obs" name="obs" placeholder="Ex.: sem açúcar, cortar o bolo ao meio"></textarea>
+        </div>
+
+        <div class="aviso" id="confirmacao" role="status" hidden>
+          Pedido enviado! Já avisamos a cozinha e logo ele fica pronto.
+        </div>
+      </form>
+
+      <div class="painel__rodape">
+        <button class="btn btn--largo" type="submit" form="form-pagamento" id="confirmar-pedido">Confirmar pedido</button>
+        <button class="btn btn--vazado btn--largo" type="button" id="voltar-carrinho">Voltar ao carrinho</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Barra do pedido: aparece quando houver itens -->
+  <aside class="pedido" id="pedido" aria-live="polite" hidden>
+    <span class="pedido__resumo"><span id="pedido-qtd">0</span> itens · <span id="pedido-total">R$ 0,00</span></span>
+    <button class="btn" type="button" id="pedido-finalizar">Ver pedido</button>
+  </aside>
+
+  <script>
+(function () {
+  const $ = (seletor, base = document) => base.querySelector(seletor);
+  const $$ = (seletor, base = document) => [...base.querySelectorAll(seletor)];
+  const moeda = (valor) => valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+
+  /* ---------- Filtro por categoria ---------- */
+  const abas = $$(".aba");
+  const cards = $$(".card");
+
+  function filtrar(categoria) {
+    abas.forEach((aba) => aba.setAttribute("aria-pressed", String(aba.dataset.categoria === categoria)));
+    cards.forEach((card) => {
+      card.hidden = !(categoria === "todos" || card.dataset.categoria === categoria);
+    });
+  }
+
+  abas.forEach((aba) => aba.addEventListener("click", () => filtrar(aba.dataset.categoria)));
+
+  const categoriaDaUrl = new URLSearchParams(location.search).get("categoria");
+  if (categoriaDaUrl && abas.some((aba) => aba.dataset.categoria === categoriaDaUrl)) {
+    filtrar(categoriaDaUrl);
+  }
+
+  /* ---------- Carrinho ---------- */
+  const carrinho = new Map(); // id -> { id, nome, preco, qtd }
+
+  const barra = $("#pedido");
+  const lista = $("#carrinho-lista");
+  const vazio = $("#carrinho-vazio");
+  const totaisCarrinho = $("#carrinho .totais");
+  const modelo = $("#tpl-item-carrinho");
+  const botaoIrPagamento = $("#ir-pagamento");
+
+  function totais() {
+    let qtd = 0;
+    let total = 0;
+    carrinho.forEach((item) => {
+      qtd += item.qtd;
+      total += item.qtd * item.preco;
+    });
+    return { qtd, total };
+  }
+
+  function atualizar() {
+    const { qtd, total } = totais();
+
+    $("#pedido-qtd").textContent = qtd;
+    $("#pedido-total").textContent = moeda(total);
+    $("#carrinho-qtd").textContent = qtd;
+    $("#carrinho-total").textContent = moeda(total);
+    barra.hidden = qtd === 0;
+
+    vazio.hidden = qtd > 0;
+    totaisCarrinho.style.display = qtd > 0 ? "" : "none";
+    botaoIrPagamento.disabled = qtd === 0;
+
+    lista.innerHTML = "";
+    carrinho.forEach((item) => {
+      const li = modelo.content.firstElementChild.cloneNode(true);
+      li.dataset.id = item.id;
+      $(".item__nome", li).textContent = item.nome;
+      $(".item__preco", li).textContent = moeda(item.preco * item.qtd);
+      $("[data-quantidade]", li).textContent = item.qtd;
+      lista.appendChild(li);
+    });
+  }
+
+  document.addEventListener("click", (evento) => {
+    const botao = evento.target.closest("[data-adicionar]");
+    if (!botao) return;
+    const card = botao.closest(".card");
+    const id = card.dataset.id;
+    if (carrinho.has(id)) {
+      carrinho.get(id).qtd += 1;
+    } else {
+      carrinho.set(id, {
+        id,
+        nome: $(".card__nome", card).textContent.trim(),
+        preco: parseFloat(card.dataset.preco) || 0,
+        qtd: 1,
+      });
+    }
+    atualizar();
+  });
+
+  lista.addEventListener("click", (evento) => {
+    const li = evento.target.closest(".item");
+    if (!li) return;
+    const item = carrinho.get(li.dataset.id);
+    if (!item) return;
+
+    if (evento.target.closest("[data-mais]")) item.qtd += 1;
+    else if (evento.target.closest("[data-menos]")) item.qtd -= 1;
+    else if (evento.target.closest("[data-remover]")) item.qtd = 0;
+    else return;
+
+    if (item.qtd <= 0) carrinho.delete(item.id);
+    atualizar();
+  });
+
+  /* ---------- Painéis (carrinho e pagamento) ---------- */
+  const paineis = $$(".painel");
+  const painelCarrinho = $("#carrinho");
+  const painelPagamento = $("#pagamento");
+  let focoAnterior = null;
+
+  function abrir(painel) {
+    if (!paineis.some((p) => !p.hidden)) focoAnterior = document.activeElement;
+    paineis.forEach((p) => { p.hidden = true; });
+    painel.hidden = false;
+    document.body.classList.add("sem-rolagem");
+    const primeiro = $("button", painel);
+    if (primeiro) primeiro.focus();
+  }
+
+  function fecharTudo() {
+    const pagamentoAberto = !painelPagamento.hidden;
+    paineis.forEach((p) => { p.hidden = true; });
+    document.body.classList.remove("sem-rolagem");
+    if (pagamentoAberto && !confirmacao.hidden) reiniciarFormulario();
+    if (focoAnterior && focoAnterior.focus) focoAnterior.focus();
+    focoAnterior = null;
+  }
+
+  $("#pedido-finalizar").addEventListener("click", () => abrir(painelCarrinho));
+  $$("[data-fechar]").forEach((botao) => botao.addEventListener("click", fecharTudo));
+  paineis.forEach((painel) => {
+    painel.addEventListener("click", (evento) => {
+      if (evento.target === painel) fecharTudo(); // clique no fundo escuro
+    });
+  });
+  document.addEventListener("keydown", (evento) => {
+    if (evento.key === "Escape" && paineis.some((p) => !p.hidden)) fecharTudo();
+  });
+
+  botaoIrPagamento.addEventListener("click", () => {
+    preencherResumo();
+    abrir(painelPagamento);
+  });
+  $("#voltar-carrinho").addEventListener("click", () => abrir(painelCarrinho));
+
+  /* ---------- Pagamento ---------- */
+  const form = $("#form-pagamento");
+  const confirmacao = $("#confirmacao");
+  const botaoConfirmar = $("#confirmar-pedido");
+  const campoMesa = $("#campo-mesa");
+  const campoTroco = $("#campo-troco");
+
+  function valorSelecionado(nome) {
+    const marcado = form.querySelector('input[name="' + nome + '"]:checked');
+    return marcado ? marcado.value : "";
+  }
+
+  function atualizarCamposCondicionais() {
+    campoMesa.hidden = valorSelecionado("entrega") !== "mesa";
+    campoTroco.hidden = valorSelecionado("pagamento") !== "dinheiro";
+  }
+
+  $$('input[name="entrega"], input[name="pagamento"]').forEach((radio) => {
+    radio.addEventListener("change", atualizarCamposCondicionais);
+  });
+
+  function preencherResumo() {
+    const resumo = $("#pagamento-resumo");
+    resumo.innerHTML = "";
+    carrinho.forEach((item) => {
+      const li = document.createElement("li");
+      const nome = document.createElement("span");
+      const preco = document.createElement("span");
+      nome.textContent = item.qtd + "x " + item.nome;
+      preco.textContent = moeda(item.preco * item.qtd);
+      li.append(nome, preco);
+      resumo.appendChild(li);
+    });
+    $("#pagamento-total").textContent = moeda(totais().total);
+  }
+
+  function reiniciarFormulario() {
+    form.reset();
+    confirmacao.hidden = true;
+    botaoConfirmar.disabled = false;
+    atualizarCamposCondicionais();
+  }
+
+  // Limpa a mensagem de erro de um campo assim que a pessoa volta a digitar
+  $$("input, textarea", form).forEach((campo) => {
+    campo.addEventListener("input", () => campo.setCustomValidity(""));
+  });
+
+  function paraNumero(texto) {
+    return parseFloat(texto.replace(/\./g, "").replace(",", "."));
+  }
+
+  function validar() {
+    const nome = $("#nome");
+    const telefone = $("#telefone");
+    const mesa = $("#mesa");
+    const troco = $("#troco");
+
+    [nome, telefone, mesa, troco].forEach((c) => c.setCustomValidity(""));
+
+    if (nome.value.trim().length < 2) nome.setCustomValidity("Informe seu nome.");
+    const digitos = telefone.value.replace(/\D/g, "");
+    if (digitos.length < 10 || digitos.length > 11) telefone.setCustomValidity("Informe o WhatsApp com DDD.");
+    if (valorSelecionado("entrega") === "mesa" && !mesa.value.trim()) mesa.setCustomValidity("Informe o número da mesa.");
+    if (valorSelecionado("pagamento") === "dinheiro" && troco.value.trim()) {
+      const valor = paraNumero(troco.value);
+      if (isNaN(valor) || valor < totais().total) troco.setCustomValidity("O valor do troco deve ser maior ou igual ao total.");
+    }
+    return form.reportValidity();
+  }
+
+  // TODO (integração): trocar esta função pelo envio real (backend → Softcom e impressão na cozinha)
+  function enviarPedido(pedido) {
+    console.log("Pedido pronto para enviar:", pedido);
+    return Promise.resolve();
+  }
+
+  form.addEventListener("submit", async (evento) => {
+    evento.preventDefault();
+    if (carrinho.size === 0 || !validar()) return;
+
+    const pedido = {
+      cliente: { nome: $("#nome").value.trim(), telefone: $("#telefone").value.trim() },
+      entrega: valorSelecionado("entrega"),
+      mesa: valorSelecionado("entrega") === "mesa" ? $("#mesa").value.trim() : null,
+      pagamento: valorSelecionado("pagamento"),
+      troco: valorSelecionado("pagamento") === "dinheiro" ? $("#troco").value.trim() : null,
+      observacoes: $("#obs").value.trim(),
+      itens: [...carrinho.values()].map(({ id, nome, preco, qtd }) => ({ id, nome, preco, qtd })),
+      total: totais().total,
+      criadoEm: new Date().toISOString(),
+    };
+
+    botaoConfirmar.disabled = true;
+    try {
+      await enviarPedido(pedido);
+      confirmacao.hidden = false;
+      confirmacao.scrollIntoView({ block: "nearest" });
+      carrinho.clear();
+      atualizar();
+    } catch (erro) {
+      console.error("Erro ao enviar o pedido:", erro);
+      botaoConfirmar.disabled = false;
+      alert("Não conseguimos enviar o pedido. Tente de novo ou chame um atendente.");
+    }
+  });
+
+  atualizarCamposCondicionais();
+  atualizar();
+})();
+</script>
+</body>
+</html>

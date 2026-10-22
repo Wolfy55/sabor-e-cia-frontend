@@ -1,0 +1,69 @@
+.cardapio{
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: var(--space-12) var(--space-5) var(--space-20); /* espaço extra no fim para a barra do pedido não cobrir os cards */
+}
+
+.titulo{
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-xl);
+    font-weight: var(--weight-semibold);
+    color: var(--text-heading);
+}
+
+.texto{
+    margin: 0 0 var(--space-6);
+    color: var(--text-muted);
+}
+
+/* Abas de categoria: grudam no topo e rolam para o lado no celular */
+.abas{
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: var(--background);
+    padding: var(--space-3) 0;
+}
+
+.abasLista{
+    display: flex;
+    gap: var(--space-3);
+    list-style: none;
+    margin: 0;
+    padding: 0 0 var(--space-1);
+    overflow-x: auto;
+}
+
+.aba{
+    font: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+    padding: var(--space-2) var(--space-5);
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--outline);
+    background: transparent;
+    color: var(--on-surface);
+}
+
+.aba:hover{ background: var(--border-subtle); }
+
+.abaAtiva,
+.abaAtiva:hover{
+    background: var(--primary);
+    color: var(--on-primary);
+}
+
+.grade{
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: 1fr;
+    padding-top: var(--space-4);
+}
+
+@media (min-width: 640px){
+    .grade{ grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 960px){
+    .grade{ grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
+}

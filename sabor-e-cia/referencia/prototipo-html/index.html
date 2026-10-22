@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sabor e cia café | Cafeteria e panificação em Pouso Alegre</title>
+  <meta name="description" content="Pães, bolos, tortas, salgados e cafés num espaço aconchegante para toda a família, em Pouso Alegre. Veja o cardápio e faça seu pedido.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="hero" id="inicio">
+
+    <nav class="nav" aria-label="Principal">
+      <a class="nav__logo" href="#inicio">
+        <img src="assets/logo.jpg" alt="Sabor e cia, cafeteria e panificação" width="56" height="56">
+      </a>
+      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
+      <ul class="nav__links" id="nav-links">
+        <li><a href="#cardapio">Cardápio</a></li>
+        <li><a href="#espaco">O espaço</a></li>
+        <li><a href="#contato">Onde estamos</a></li>
+      </ul>
+    </nav>
+
+    <div class="hero__content">
+      <div class="hero__text">
+        <h1 class="hero__title">O sabor de casa, feito todo dia.</h1>
+        <p class="hero__lead">Pães quentinhos, bolos, tortas e o café que você gosta, num espaço aconchegante para toda a família. Em Pouso Alegre.</p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#cardapio">Ver cardápio</a>
+          <a class="btn btn--ghost" href="#pedido">Fazer pedido</a>
+        </div>
+      </div>
+
+      <figure class="hero__photo">
+        <!-- TODO: trocar o bloco abaixo por <img src="assets/salao.jpg" alt="..."> com foto real do salão ou da vitrine -->
+        <div class="hero__photo-placeholder">Foto do salão ou da vitrine</div>
+      </figure>
+    </div>
+
+    <div class="categories">
+      <p class="categories__label">Peça por categoria</p>
+      <ul class="categories__list">
+        <li><a href="#cardapio" data-categoria="cafes">Cafés</a></li>
+        <li><a href="#cardapio" data-categoria="paes">Pães</a></li>
+        <li><a href="#cardapio" data-categoria="bolos">Bolos</a></li>
+        <li><a href="#cardapio" data-categoria="tortas">Tortas</a></li>
+        <li><a href="#cardapio" data-categoria="salgados">Salgados</a></li>
+      </ul>
+    </div>
+
+  </header>
+
+  <!-- TODO: próximas seções: #cardapio, #pedido, #espaco, #contato -->
+
+  <script src="script.js"></script>
+</body>
+</html>
